@@ -11,6 +11,7 @@ export default {
         input: "#414141",
         greenBg: "#509D45",
         greenBorder: "#3CB62C",
+        borderRight: "#3CB62C"
       },
       backgroundColor:{
         menubar: "#000000"
@@ -20,9 +21,20 @@ export default {
         'montserrat-800': ['Montserrat-Bold', 'sans-serif'],
         'montserrat-900': ['Montserrat-ExtraBold', 'sans-serif'],
       },
+      fontSize: {
+        'size-button': '25px'
+      },
       width: {
         formWidth: "30%",
-        buttonWidth: "55%"
+        buttonWidth: "55%",
+        'screen-md': '768px',
+        'screen-lg': '1024px',
+        'screen-xl': '1280px',
+
+        'form-sm': '60%',
+        'form-md': '50%',
+        'form-lg': '40%',
+        'form-xl': '40%'
       },
       height: {
         

@@ -5,14 +5,16 @@ import '../../App.css';
 import folhaverde from '../../assets/folinha-verde.svg';
 import cart from '../../assets/cart.svg';
 import clock from '../../assets/clock.svg';
+import logout from '../../assets/logout.svg';
 
 function MenuBar () {
     return (
-        <nav className="bg-menubar z-0 w-28 h-screen p-4">
+        <nav className="bg-menubar z-0 w-20 h-screen p-4 border-r-2 border-borderRight outline-none">
             <div className='flex flex-col items-center'>
-                <img className="w-20 h-24 mt-2" src={folhaverde}></img>
-                <img className="w-14 mt-8" src={cart}></img>
-                <img className="w-14 mt-8" src={clock}></img>
+                <img className="w-12 h-20 mt-2" src={folhaverde}></img>
+                <img className="w-12 mt-8" src={cart}></img>
+                <img className="w-12 mt-8" src={clock}></img>
+                <img className="w-12 absolute bottom-8" src={logout}></img>
             </div>
             {/* <ul>
             <li>

@@ -27,7 +27,17 @@ function Login () {
         console.log(response.data)
 
           if (response.data) {
-            Swal.fire("Bem vindo", "Logado com sucesso", "success");
+            Swal.fire({
+              title: `Seja bem vindo novamente ${response.data.person.name}`,
+              text: '',
+              showConfirmButton: false,
+              position: 'bottom-end',
+              customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+              } 
+            });
+            
             navigate('/initial-page');
           }
         } catch (error) {
@@ -65,14 +75,14 @@ function Login () {
 
         <img src={folha2} alt="Folha 2" className="absolute bottom-0 left-0 w-96 h-96" /> */}
 
-        <form className="flex flex-col items-start w-formWidth">
+        <form className="relative z-10 flex flex-col items-start sm:w-form-sm md:w-form-md lg:w-form-lg xl:w-form-xl">
             <div className="flex items-center justify-center mx-auto my-auto">
               <h1 className="font-primary text-white text-[48px] p-4 mb-0 -ml-4">Entrar</h1>
             </div>
             <h2 className="font-primary text-white text-[24px] p-4 mb-0 -ml-4">Digite seu CPF</h2>
             <input
             type="text"
-            className=" w-full h-14 bg-opacity-100 -mb-2 bg-input border-2 border-greenBorder p-4 rounded-borderCustom outline-none font-primary text-sm text-white text-[18px]"
+            className="w-full md:w-width-md h-12 bg-opacity-100 -mb-2 bg-input border-2 border-greenBorder p-4 rounded-borderCustom outline-none font-primary text-sm text-white text-[18px]"
             placeholder="Digite aqui"
             value={cpf}
             onChange={e => setCpf(e.target.value)}
@@ -89,8 +99,8 @@ function Login () {
             </div>
 
             <div className="w-buttonWidth flex flex-col items-center justify-center mx-auto my-auto">
-              <button type="submit" onClick={handleLogin} className={`${centerButtonClass} h-14 bg-greenBg w-full mt-5 border-greenBorder p-2 rounded-borderCustom outline-none font-primary text-sm text-white text-[25px]`}>Acessar</button>
-              <Link className="mt-2 font-primary text-white text-[16px] hover:text-gray-400" to="/suporte">Suporte</Link>
+              <button type="submit" onClick={handleLogin} className={`${centerButtonClass} h-12 bg-greenBg w-full mt-5 border-greenBorder p-2 rounded-borderCustom outline-none font-primary text-sm text-white text-[26px]`}>Acessar</button>
+              <Link className="mt-2 font-primary text-white text-[14px] hover:text-gray-400" to="/suporte">Suporte</Link>
             </div>
         </form>
       </div>
