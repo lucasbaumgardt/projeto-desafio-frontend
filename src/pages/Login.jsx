@@ -1,46 +1,100 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import api from "../services/api";
 
-    const Login = () => {
-      const [cpf, setCpf] = useState('');
-      const [isChecked, setIsChecked] = useState(false);
+import logo from '../assets/logopormade.svg';
+import folha1 from '../assets/folhapormade-fundo.svg';
+import folha2 from '../assets/folhapormade-fundo2.svg';
 
-      const handleCpfChange = (e) => {
-        setCpf(e.target.value);
-      };
+function Login () {
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [admin, setAdmin] = useState(false);
 
-      const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-      };
+    const [nameRegister, setNameRegister] = useState("");
+    const [cpfRegister, setCpfRegister] = useState("");
 
-      const handleLogin = () => {
-        console.log('CPF:', cpf);
-        console.log('Checkbox está', isChecked ? 'selecionado' : 'desselecionado');
-      };
+    const navigate = useNavigate();
 
-  return (
-      <form className="flex flex-col items-start">
-          <h1 className="font-primary text-white text-[20px] p-4 mb-0 -ml-4">Digite seu CPF</h1>
-          <input
-          type="text"
-          className="w-full h-10 bg-opacity-100 -mb-2 bg-input border-2 border-greenBorder p-4 rounded-md outline-none font-primary text-sm text-white"
-          id="cpf"
-          value={cpf}
-          onChange={handleCpfChange}
-          placeholder="Digite seu CPF"
-          />
-          <label>
+    const centerButtonClass = "mx-auto my-auto";
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+        const response = await api.get(`/pessoas?cpf=${cpf}`);
+
+        console.log(response.data)
+
+          if (response.data) {
+            Swal.fire("Bem vindo", "Logado com sucesso", "success");
+            navigate('/initial-page');
+          }
+        } catch (error) {
+            console.log(error);
+            Swal.fire("Erro ao fazer login", "Verifique suas credenciais e tente novamente", "error");
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+        const response = await api.post("/pessoas", {
+            name: nameRegister,
+            cpf: cpfRegister,
+            admin: admin,
+        });
+
+        if (response.status === 200) {
+            Swal.fire("Registro bem-sucedido", "Faça login para continuar", "success");
+            setNameRegister("");
+            setCpfRegister("");
+        }
+        } catch (error) {
+            console.log(error);
+            Swal.fire("Erro ao registrar", "Verifique se o email já está cadastrado", "error");
+        }
+    };
+
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+
+        <img src={logo} alt="Logo Pormade" className="absolute top-4"></img>
+
+        {/*<img src={folha1} alt="Folha 1" className="absolute top-0 right-0 w-96 h-96" />
+
+        <img src={folha2} alt="Folha 2" className="absolute bottom-0 left-0 w-96 h-96" /> */}
+
+        <form className="flex flex-col items-start w-formWidth">
+            <div className="flex items-center justify-center mx-auto my-auto">
+              <h1 className="font-primary text-white text-[48px] p-4 mb-0 -ml-4">Entrar</h1>
+            </div>
+            <h2 className="font-primary text-white text-[24px] p-4 mb-0 -ml-4">Digite seu CPF</h2>
             <input
-              type="checkbox"
-              className="text-white text-[10px] p-4 mb-0 -ml-4"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
+            type="text"
+            className=" w-full h-14 bg-opacity-100 -mb-2 bg-input border-2 border-greenBorder p-4 rounded-borderCustom outline-none font-primary text-sm text-white text-[18px]"
+            placeholder="Digite aqui"
+            value={cpf}
+            onChange={e => setCpf(e.target.value)}
             />
-            Manter-me Conectado
-          </label>
+            <div className="flex items-center mt-5">
+                <input
+                type="checkbox"
+                id="keepLoggedIn"
+                className="mr-2"
+                />
+                <label htmlFor="keepLoggedIn" className="text-white text-[14px]">
+                Manter-me conectado
+                </label>
+            </div>
 
-          <button type="submit" onClick={handleLogin} className="h-10 bg-greenBg w-full mt-5 border-greenBorder p-2 rounded-md outline-none font-primary text-sm text-white">Logar</button>
-      </form>
-  )
+            <div className="w-buttonWidth flex flex-col items-center justify-center mx-auto my-auto">
+              <button type="submit" onClick={handleLogin} className={`${centerButtonClass} h-14 bg-greenBg w-full mt-5 border-greenBorder p-2 rounded-borderCustom outline-none font-primary text-sm text-white text-[25px]`}>Acessar</button>
+              <Link className="mt-2 font-primary text-white text-[16px] hover:text-gray-400" to="/suporte">Suporte</Link>
+            </div>
+        </form>
+      </div>
+    )
 
 }
 
