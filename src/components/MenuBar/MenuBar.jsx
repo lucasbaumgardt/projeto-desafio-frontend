@@ -10,9 +10,10 @@ function MenuBar () {
     return (
         <nav className="bg-menubar z-0 w-28 h-screen p-4">
             <div className='flex flex-col items-center'>
-                <img className="w-20 h-24 mt-2" src={folhaverde}></img>
-                <img className="w-14 mt-8" src={cart}></img>
-                <img className="w-14 mt-8" src={clock}></img>
+                <img className="w-20 h-16  mt-2" src={folhaverde}></img>
+                <img className="w-16 h-16 mt-8" src={clock}></img>
+                <img className="w-16 h-16 mt-8" src={cart}></img>
+                <img className="w-16 h-16 mb-2 absolute bottom-0" src={cart}></img>
             </div>
             {/* <ul>
             <li>
