@@ -3,11 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from "../services/api";
+import api from "../../services/api";
 
-import logo from '../assets/logopormade.svg';
-import folha1 from '../assets/folhapormade-fundo.svg';
-import folha2 from '../assets/folhapormade-fundo2.svg';
+import logo from '../../assets/logopormade.svg';
+import folha1 from '../../assets/folhapormade-fundo.svg';
+import folha2 from '../../assets/folhapormade-fundo2.svg';
 
 function Login () {
     const [name, setName] = useState("");

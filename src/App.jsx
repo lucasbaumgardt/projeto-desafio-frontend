@@ -3,9 +3,9 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Suporte from './pages/Suporte';
-import PaginaInicial from "./pages/PaginaInicial";
+import PaginaInicial from "./pages/PaginaInicial/PaginaInicial";
 import logo from './assets/logopormade.svg';
 import folha1 from './assets/folhapormade-fundo.svg';
 import folha2 from './assets/folhapormade-fundo2.svg';
