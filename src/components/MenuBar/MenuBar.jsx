@@ -9,7 +9,7 @@ import logout from '../../assets/logout.svg';
 
 function MenuBar () {
     return (
-        <nav className="bg-menubar z-0 w-24 h-screen p-4 border-r-2 border-borderRight outline-none">
+        <nav className="fixed top-0 bg-menubar z-10 w-24 h-screen p-4 border-r-2 border-borderRight outline-none">
             <div className='flex flex-col items-center'>
                 <img className="w-12 h-20 mt-2" src={folhaverde}></img>
                 <img className="w-12 mt-8" src={cart}></img>

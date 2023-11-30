@@ -46,7 +46,7 @@ export default {
         'search-width': '100%'
       },
       height: {
-        
+        'container-height': '50%',
       },
       borderRadius: {
         borderCustom: "15px",

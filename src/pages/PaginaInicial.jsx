@@ -31,29 +31,33 @@ function PaginaInicial() {
     <div className="flex">
       <MenuBar/>
 
-      <div className="bg-container-color z-0 w-container-width h-auto flex flex-col items-center p-4 m-8
+      <div className="bg-container-color z-0 w-container-width h-auto flex flex-col items-center p-4 mt-8 mr-8 ml-36
       border-2 border-greenBorder2 rounded-borderCustom outline-none">
         
-        <div className='relative w-search-div'>
-          <input type='search' className='bg-black w-search-width text-white font-primary border h-12 mt-6 p-4 border-greenBorder2 rounded-borderCustom outline-none'>
+        <div className='relative w-search-div mt-12'>
+          <input type='search' className='bg-black w-search-width text-white font-primary border h-12 p-4 border-greenBorder2 rounded-borderCustom outline-none'>
           
           </input>
 
           <img
             src={search}
             alt="Ícone de pesquisa"
-            className="absolute right-5 top-9 bottom-auto"
+            className="absolute right-5 top-3"
           />
         </div>
 
-        <div className="w-container-grid h-auto grid grid-cols-3 gap-10 mt-10">
+        <div className="w-container-grid h-auto grid grid-cols-3 gap-10 mt-16">
           {products.map((product) => (
-            <div key={product.id} className="bg-card-color w-card-grid border-2 h-52 border-greenBorder2 rounded-borderCustom outline-none m-auto">
+            <div key={product.id} className="bg-card-color w-card-grid border-2 h-80 border-greenBorder2 rounded-borderCustom outline-none m-auto">
               <p>{product.name}</p>
               <p>{product.description}</p>
               <p>{product.value}</p>
             </div>
           ))}
+        </div>
+
+        <div className='mt-16 h-16'>
+          123456
         </div>
 
       </div>
