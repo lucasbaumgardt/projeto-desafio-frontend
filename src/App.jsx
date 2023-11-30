@@ -1,6 +1,8 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login';
 import Suporte from './pages/Suporte';
 import PaginaInicial from "./pages/PaginaInicial";
@@ -12,7 +14,7 @@ function App() {
 
   return (
     <Router>
-
+      <ToastContainer />
       <img src={folha1} alt="Folha 1" className="absolute top-0 right-0 w-96 h-96" />
       <img src={folha2} alt="Folha 2" className="absolute bottom-0 left-0 w-96 h-96" />
       

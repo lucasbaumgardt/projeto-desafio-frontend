@@ -11,10 +11,13 @@ export default {
         input: "#414141",
         greenBg: "#509D45",
         greenBorder: "#3CB62C",
-        borderRight: "#3CB62C"
+        greenBorder2: "#509D46",
+        borderRight: "#509D46"
       },
       backgroundColor:{
-        menubar: "#000000"
+        menubar: "#0a0a0a",
+        'container-color': '#0a0a0a',
+        'card-color': '#212121'
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],
@@ -34,7 +37,13 @@ export default {
         'form-sm': '60%',
         'form-md': '50%',
         'form-lg': '40%',
-        'form-xl': '40%'
+        'form-xl': '40%',
+
+        'container-width': '100%',
+        'container-grid': '80%',
+        'card-grid': '95%',
+        'search-div': '40%',
+        'search-width': '100%'
       },
       height: {
         
