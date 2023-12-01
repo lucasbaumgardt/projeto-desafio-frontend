@@ -56,7 +56,7 @@ function PaginaInicial() {
     addToCart({ id: product.id, 
       name: product.name, 
       description: product.description, 
-      price: product.price
+      value: product.value
     });
   };
 
@@ -77,7 +77,7 @@ function PaginaInicial() {
 
         <div className="w-container-grid h-auto grid grid-cols-3 gap-8 mt-6">
           {currentProducts.map((product) => (
-            <div key={product.id} className="bg-card-color xl:w-xl-card-grid border-1 h-52 border-greenBorder2 rounded-borderCustom outline-none m-auto">
+            <div key={product.id} className="bg-card-color xl:w-xl-card-grid border-1 h-48 border-greenBorder2 rounded-borderCustom outline-none m-auto">
               <div className='m-5 flex flex-col gap-1'>
                 <div className='flex flex-row items-center'>
                   <h1 className='font-primary text-white'>{product.name}</h1>
@@ -86,8 +86,11 @@ function PaginaInicial() {
                 <hr className='bg-greenBg w-68 border-none h-0.5 mt-1 mb-1'></hr>
                 {/* <p className='font-primary text-white'>{product.name}</p> */}
                 <p className='text-white'>{product.description}</p>
-                <div className='mt-14 flex flex-row items-center'>
-                  <p className='font-primary text-white'>{product.value}</p>
+                <div className='mt-4 flex flex-row items-center'>
+                  <p className='font-primary text-white'>{parseFloat(product.value).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  })}</p>
                   <img className="ml-auto w-9 h-9" src={addcicle} alt="Add Circle Icon" onClick={() => adicionarProdutoAoCarrinho(product)}></img>
                 </div>
               </div>
@@ -95,7 +98,7 @@ function PaginaInicial() {
           ))}
         </div>
 
-        <div className='flex flex-row gap-2 absolute bottom-14'>
+        <div className='flex flex-row gap-2 absolute bottom-12'>
 
           <BiChevronLeft className='w-10 h-10 text-white cursor-pointer' onClick={handlePrevPage}></BiChevronLeft>
 

@@ -9,16 +9,19 @@ export default {
       colors: {
         body: "#212121",
         input: "#414141",
+        green1: "#509D46",
         greenBg: "#509D46",
         greenBorder: "#3CB62C",
         greenBorder2: "#509D46",
-        borderRight: "#509D46"
+        borderRight: "#509D46",
+        cartmessage: "#8C8C8C"
       },
       backgroundColor:{
         menubar: "#0a0a0a",
         'container-color': '#0a0a0a',
         'card-color': '#212121',
-        'page-color': '#3CB62C'
+        'page-color': '#3CB62C',
+        'cart-color1': '#212121'
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],
@@ -55,11 +58,16 @@ export default {
         'md-card-grid': '95%',
         'lg-card-grid': '95%',
         'xl-card-grid': '95%',
+
+        'cart-height1': '70vh'
       },
       borderRadius: {
         borderCustom: "15px",
         borderCustom2: "10px",
       },
+      textDecorationColor: {
+        'linkcart': 'underline'
+      }
     },
   },
   plugins: [],

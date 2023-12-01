@@ -20,3 +20,8 @@ body {
 .custom-swal-title {
   font-size: 15px;
 }
+
+.link-decor {
+  text-decoration: underline;
+  color: #509D46;
+}
