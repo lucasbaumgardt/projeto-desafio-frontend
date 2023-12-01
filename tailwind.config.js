@@ -17,7 +17,8 @@ export default {
       backgroundColor:{
         menubar: "#0a0a0a",
         'container-color': '#0a0a0a',
-        'card-color': '#212121'
+        'card-color': '#212121',
+        'page-color': '#3CB62C'
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],
@@ -49,7 +50,7 @@ export default {
         'search-width': '100%'
       },
       height: {
-        'container-height': '93vh',
+        'container-height': '95vh',
         'sm-card-grid': '95%',
         'md-card-grid': '95%',
         'lg-card-grid': '95%',
@@ -57,6 +58,7 @@ export default {
       },
       borderRadius: {
         borderCustom: "15px",
+        borderCustom2: "10px",
       },
     },
   },
