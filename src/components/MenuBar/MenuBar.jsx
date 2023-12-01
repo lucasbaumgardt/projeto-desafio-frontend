@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-
 import folhaverde from '../../assets/folinha-verde.svg';
 import cart from '../../assets/cart.svg';
 import clock from '../../assets/clock.svg';
