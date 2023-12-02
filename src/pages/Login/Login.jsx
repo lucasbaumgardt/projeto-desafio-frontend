@@ -84,7 +84,7 @@ function Login () {
             <input
             type="text"
             className="w-full md:w-width-md h-12 bg-opacity-100 -mb-2 bg-input border-2 border-greenBorder p-4 rounded-borderCustom outline-none font-primary text-sm text-white text-[18px]"
-            placeholder="Digite aqui"
+            placeholder="Digite seu CPF"
             value={cpf}
             onChange={e => setCpf(e.target.value)}
             />

@@ -25,3 +25,45 @@ body {
   text-decoration: underline;
   color: #509D46;
 }
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #79ffa3 #48a73b;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #48a73b;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #79ffa3;
+  border-radius: 20px;
+}
+
+
+
+/* Works on Firefox */
+.scroll-cart {
+  scrollbar-width: thin;
+  scrollbar-color: #79ffa3 #48a73b;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.scroll-cart::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-cart::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+.scroll-cart::-webkit-scrollbar-thumb {
+  background-color: #0A0A0A;
+  border-radius: 20px;
+}

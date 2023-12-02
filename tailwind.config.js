@@ -19,6 +19,7 @@ export default {
       backgroundColor:{
         menubar: "#0a0a0a",
         'container-color': '#0a0a0a',
+        'grey1': '#0a0a0a',
         'card-color': '#212121',
         'page-color': '#3CB62C',
         'cart-color1': '#212121'
@@ -50,7 +51,11 @@ export default {
         'lg-card-grid': '95%',
         'xl-card-grid': '95%',
         'search-div': '40%',
-        'search-width': '100%'
+        'search-width': '100%',
+
+        'cart-width': '80%',
+        'cart-width2': '50%',
+        'hr-cart': '100%'
       },
       height: {
         'container-height': '95vh',
@@ -59,15 +64,14 @@ export default {
         'lg-card-grid': '95%',
         'xl-card-grid': '95%',
 
-        'cart-height1': '70vh'
+        'cart-height1': '70vh',
+        'cart-itens': '70vh'
       },
       borderRadius: {
         borderCustom: "15px",
         borderCustom2: "10px",
+        borderCustom3: "5px",
       },
-      textDecorationColor: {
-        'linkcart': 'underline'
-      }
     },
   },
   plugins: [],

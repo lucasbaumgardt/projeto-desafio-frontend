@@ -6,10 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './pages/Login/Login';
 import Suporte from "./pages/Suporte/Suporte";
 import PaginaInicial from "./pages/PaginaInicial/PaginaInicial";
-import logo from './assets/logopormade.svg';
+import CadastraUsuarios from "./pages/Usuarios/CadastraUsuarios";
+import CadastraProdutos from "./pages/Produtos/CadastraProdutos";
 import folha1 from './assets/folhapormade-fundo.svg';
 import folha2 from './assets/folhapormade-fundo2.svg';
-import { CartProvider } from "./contexts/cartContext";
+import { CartProvider } from "./contexts/Cart/cartContext";
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
         <Route path="/login" element={<Login/>}></Route>
 
         <Route path="/initial-page" element={<PaginaInicial/>}></Route>
+        <Route path="/cad-users" element={<CadastraUsuarios/>}></Route>
+        <Route path="/cad-products" element={<CadastraProdutos/>}></Route>
         <Route path="/suporte" element={<Suporte/>}></Route>
       </Routes>
       </CartProvider>
