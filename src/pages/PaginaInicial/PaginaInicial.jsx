@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import MenuBar from '../../components/MenuBar/MenuBar';
 import searchIcon from '../../assets/search.svg';
 import star from '../../assets/star.svg';
 import addcicle from '../../assets/add_circle.svg';
@@ -104,7 +103,6 @@ function PaginaInicial() {
 
   return (
     <div className="flex flex-col items-center">
-      <MenuBar />
 
       <div className="bg-container-color z-0 w-container-width h-container-height flex flex-col items-center p-4 mt-6 mb-6 mr-8 ml-32 border-2 border-greenBorder2 rounded-borderCustom outline-none">
         <div className='relative w-search-div mt-2'>

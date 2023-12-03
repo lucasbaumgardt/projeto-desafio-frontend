@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import folhaverde from '../../assets/folinha-verde.svg';
@@ -11,16 +11,23 @@ import flecha from '../../assets/flecha.svg';
 import cart2 from '../../assets/cart2.svg';
 import CarrinhoCompras from '../../pages/Carrinho/Carrinho';
 import { useCart } from '../../contexts/Cart/cartContext';
+import { AuthContext } from '../../contexts/Users/authContext';
 
 function MenuBar () {
+    const { signOut } = useContext(AuthContext)
 
-    const {cartItems} = useCart();
+    const { cartItems } = useCart();
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const [isMenuVisible, setMenuVisible] = useState(false);
 
     const navigate = useNavigate();
+
+    const userData = localStorage.getItem("userData");
+    const userDataObeject = JSON.parse(userData);
+
+    const isAdmin = userDataObeject && userDataObeject.person && userDataObeject.person.admin;
 
     const customStyles = {
         content: {
@@ -51,20 +58,29 @@ function MenuBar () {
 
     const navigateToPageCadUsers = () => {
         navigate("/cad-users");
+        setMenuVisible(false);
     }
 
     const navigateToPageCadProducts = () => {
         navigate("/cad-products");
+        setMenuVisible(false);
     }
 
+    const handleLogout = () => {
+        signOut();
+        navigate('/login');
+    };
+
     return (
-        <nav className="fixed top-0 left-0 bg-menubar z-10 w-24 h-screen p-4 border-r-2 border-borderRight outline-none">
+        <div className="fixed top-0 left-0 bg-menubar z-10 w-24 h-screen p-4 border-r-2 border-borderRight outline-none">
             <div className='flex flex-col items-center'>
                 <img className="w-16 h-20 mt-2" src={folhaverde}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={cart} onClick={() => setModalIsOpen(true)}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={clock}></img>
-                <img className="w-10 mt-8 cursor-pointer" src={adminicon} onClick={() => setMenuVisible(true)}></img>
-                <img className="w-12 absolute bottom-8 cursor-pointer" src={logout}></img>
+                {isAdmin && (
+                    <img className="w-10 mt-8 cursor-pointer" src={adminicon} onClick={() => setMenuVisible(true)}></img>
+                )}
+                <img className="w-12 absolute bottom-8 cursor-pointer" src={logout} onClick={handleLogout}></img>
             </div>
 
             {isMenuVisible && (
@@ -103,7 +119,7 @@ function MenuBar () {
                 )}
 
             </Modal>
-        </nav> 
+        </div> 
     )
 }
 

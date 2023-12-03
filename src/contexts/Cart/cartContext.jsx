@@ -80,7 +80,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     // Verifica e remove itens expirados a cada 1 hora
-    const cleanupInterval = setInterval(removeExpiredItems, 60 * 60 * 1000); // 1 hora em milissegundos
+    const cleanupInterval = setInterval(removeExpiredItems, 24 * 60 * 60 * 1000); // 1 hora em milissegundos
 
     return () => {
       clearInterval(cleanupInterval);

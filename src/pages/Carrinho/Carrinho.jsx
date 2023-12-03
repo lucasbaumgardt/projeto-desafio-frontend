@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from 'react-modal';
 import '../../App.css';
 import { AiOutlineMinus } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -6,10 +7,57 @@ import { useCart } from "../../contexts/Cart/cartContext";
 
 const CarrinhoCompras = () => {
     const { cartItems, incrementQuantity, removeQuantity, removeFromCart } = useCart();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [productToDelete, setProductToDelete] = useState(null);
+
+    const handleShowModal = (productId) => {
+        setProductToDelete(productId);
+        setModalIsOpen(true);
+      };
+    
+    const handleCloseModal = () => {
+        setProductToDelete(null);
+        setModalIsOpen(false);
+    };
+
+    const handleDeleteProduct = () => {
+        if (productToDelete) {
+            removeFromCart(productToDelete);
+            handleCloseModal();
+        }
+    };
+    
 
     const calcularSubtotal = () => {
         return cartItems.reduce((total, item) => total + (item.value * item.quantity), 0)
-      }
+    }
+
+    const customStyles = {
+        content: {
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          width: '40%',
+          height: '20vh',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#0A0A0A',
+          border: '2px solid #509D46',
+          borderRadius: '15px',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+          overflowY: 'hidden'
+        },
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#000000',
+          zIndex: 999,
+        },
+    };
 
     return (
         <div>
@@ -23,8 +71,23 @@ const CarrinhoCompras = () => {
                             <hr className='bg-greenBg w-hr-cart border-none h-0.5 mt-1 mb-1'></hr>
                             <p className="text-white">{item.description}</p>
                             
-                            <button className="bg-red-800 w-24 h-10 mt-14 text-white rounded-borderCustom2 outline-none" onClick={() => removeFromCart(item.id)}>Excluir</button>
+                            <button className="bg-red-800 w-24 h-10 mt-14 text-white rounded-borderCustom2 outline-none" onClick={() => handleShowModal(item.id)}>Excluir</button>
                             
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onRequestClose={() => setModalIsOpen(false)}
+                                contentLabel="Carrinho de Compras"
+                                style={customStyles}
+                                >
+                                <div className="w-full h-full flex flex-col justify-center items-center gap-6">
+                                    <h1 className="text-white text-[25px] font-primary">Deseja tirar esse produto do carrinho?</h1>
+
+                                    <div className="flex flex-row justify-between gap-20">
+                                        <button className="w-60 h-14 bg-red-800 rounded-borderCustom3 text-white text-[20px] font-primary" onClick={handleCloseModal}>Não</button>
+                                        <button className="w-60 h-14 bg-greenBg rounded-borderCustom3 text-white text-[20px] font-primary" onClick={handleDeleteProduct}>Sim</button>
+                                    </div>
+                                </div>
+                            </Modal>
                         </div>
 
                         <div className="w-cart-width2 flex flex-row justify-center items-center gap-20 m-10">

@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from "../../services/api";
-
 import logo from '../../assets/logopormade.svg';
-import folha1 from '../../assets/folhapormade-fundo.svg';
-import folha2 from '../../assets/folhapormade-fundo2.svg';
+import { AuthContext } from "../../contexts/Users/authContext";
 
 function Login () {
+    const { signIn, signed } = useContext(AuthContext);
+
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
     const [admin, setAdmin] = useState(false);
@@ -17,35 +17,42 @@ function Login () {
     const [nameRegister, setNameRegister] = useState("");
     const [cpfRegister, setCpfRegister] = useState("");
 
-    const navigate = useNavigate();
-
     const centerButtonClass = "mx-auto my-auto";
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-        const response = await api.get(`/pessoas?cpf=${cpf}`);
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //     const response = await api.get(`/pessoas?cpf=${cpf}`);
 
-        console.log(response.data)
+    //     console.log(response.data)
 
-          if (response.data && response.data.person.admin === true) {
-            toast.success(`Seja bem-vindo novamente ${response.data.person.name}`, {
-              position: 'bottom-right',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+    //       if (response.data && response.data.person.admin === true) {
+    //         toast.success(`Seja bem-vindo novamente ${response.data.person.name}`, {
+    //           position: 'bottom-right',
+    //           autoClose: 2000,
+    //           hideProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true,
+    //           draggable: true,
+    //           progress: undefined,
+    //         });
             
-            navigate('/initial-page');
-          }
-        } catch (error) {
-            console.log(error);
-            Swal.fire("Erro ao fazer login", "Verifique suas credenciais e tente novamente", "error");
-        }
+    //         navigate('/initial-page');
+    //       }
+    //     } catch (error) {
+    //         console.log(error);
+    //         Swal.fire("Erro ao fazer login", "Verifique suas credenciais e tente novamente", "error");
+    //     }
+    // };
+
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      const data = {
+        cpf
+      };
+      await signIn(data);
     };
+    console.log(signed); 
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -67,6 +74,7 @@ function Login () {
         }
     };
 
+    if (!signed) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
 
@@ -106,7 +114,9 @@ function Login () {
         </form>
       </div>
     )
-
+  } else {
+    return <Navigate to="/initial-page" />
+  }
 }
 
 export default Login;
