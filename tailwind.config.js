@@ -10,19 +10,14 @@ export default {
         body: "#212121",
         input: "#414141",
         green1: "#509D46",
-        greenBg: "#509D46",
-        greenBorder: "#3CB62C",
-        greenBorder2: "#509D46",
-        borderRight: "#509D46",
+        green2: "#3CB62C",
         cartmessage: "#8C8C8C"
       },
       backgroundColor:{
-        menubar: "#0a0a0a",
-        'container-color': '#0a0a0a',
         'grey1': '#0a0a0a',
-        'card-color': '#212121',
-        'page-color': '#3CB62C',
-        'cart-color1': '#212121'
+        'grey2': '#212121',
+        'green1': '#509D46',
+        'green2': '#3CB62C',
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],
@@ -33,44 +28,13 @@ export default {
         'size-button': '25px'
       },
       width: {
-        formWidth: "30%",
-        buttonWidth: "55%",
-        'screen-md': '768px',
-        'screen-lg': '1024px',
-        'screen-xl': '1280px',
-
-        'form-sm': '60%',
-        'form-md': '50%',
-        'form-lg': '40%',
-        'form-xl': '40%',
-
-        'container-width': '90%',
-        'container-grid': '90%',
-        'sm-card-grid': '95%',
-        'md-card-grid': '95%',
-        'lg-card-grid': '95%',
-        'xl-card-grid': '95%',
-        'search-div': '40%',
-        'search-width': '100%',
-
-        'cart-width': '80%',
-        'cart-width2': '50%',
-        'hr-cart': '100%'
+        
       },
       height: {
-        'container-height': '95vh',
-        'sm-card-grid': '95%',
-        'md-card-grid': '95%',
-        'lg-card-grid': '95%',
-        'xl-card-grid': '95%',
-
-        'cart-height1': '70vh',
-        'cart-itens': '70vh'
+        
       },
       borderRadius: {
-        borderCustom: "15px",
-        borderCustom2: "10px",
-        borderCustom3: "5px",
+        
       },
     },
   },

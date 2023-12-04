@@ -104,9 +104,9 @@ function PaginaInicial() {
   return (
     <div className="flex flex-col items-center">
 
-      <div className="bg-container-color z-0 w-container-width h-container-height flex flex-col items-center p-4 mt-6 mb-6 mr-8 ml-32 border-2 border-greenBorder2 rounded-borderCustom outline-none">
-        <div className='relative w-search-div mt-2'>
-          <input type='search' onClick={() => setIsListVisible(true)} onChange={(e) => setSearch(e.target.value)} className='bg-black w-search-width text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-greenBorder2 rounded-borderCustom outline-none'></input>
+      <div className="bg-grey1 z-0 w-[90%] h-[95vh] flex flex-col items-center p-4 mt-6 mb-6 mr-8 ml-32 border-2 border-green1 rounded-[15px] outline-none">
+        <div className='relative w-[40%] mt-2'>
+          <input type='search' onClick={() => setIsListVisible(true)} onChange={(e) => setSearch(e.target.value)} className='bg-black w-[100%] text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] outline-none'></input>
           
           {search.trim() ? (
             <ul className={`absolute top-full left-0 right-0 bg-grey1 z-50 mt-1 overflow-y-auto max-h-[200px] border border-green1`}>
@@ -125,9 +125,9 @@ function PaginaInicial() {
           />
         </div>
 
-        <div className="w-container-grid h-auto grid grid-cols-3 gap-8 mt-6">
+        <div className="w-[90%] h-auto grid grid-cols-3 gap-8 mt-6">
           {currentProducts.map((product) => (
-            <div key={product.id} className="bg-card-color w-xl-card-grid border-1 h-48 border-greenBorder2 rounded-borderCustom outline-none m-auto">
+            <div key={product.id} className="bg-grey2 w-[95%] border-2 h-48 border-green1 rounded-[15px] outline-none m-auto">
               <div className='m-5 flex flex-col gap-1'>
                 <div className='flex flex-row items-center'>
                   <h1 className='font-primary text-white'>{product.name}</h1>
@@ -141,7 +141,7 @@ function PaginaInicial() {
                     />
                   )}
                 </div>
-                <hr className='bg-greenBg w-68 border-none h-0.5 mt-1 mb-1'></hr>
+                <hr className='bg-green1 w-68 border-none h-0.5 mt-1 mb-1'></hr>
                 {/* <p className='font-primary text-white'>{product.name}</p> */}
                 <p className='text-white'>{product.description}</p>
                 <div className='mt-4 flex flex-row items-center'>
@@ -163,7 +163,7 @@ function PaginaInicial() {
           
           {Array.from(Array(pages), (product, index) => {
               return <button key={index} value={index} onClick={(e) => setCurrentPage(Number(e.target.value))}
-              className={`w-8 h-10 text-white text-[20px] font-primary rounded-borderCustom2 cursor-pointer ${index === currentPage ? 'font-primary bg-page-color w-8 h-10' : ''}`}
+              className={`w-8 h-10 text-white text-[20px] font-primary rounded-[10px] cursor-pointer ${index === currentPage ? 'font-primary bg-green2 w-8 h-10' : ''}`}
               >{index + 1}</button>
           })}
         

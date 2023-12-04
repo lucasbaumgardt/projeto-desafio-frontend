@@ -72,7 +72,7 @@ function MenuBar () {
     };
 
     return (
-        <div className="fixed top-0 left-0 bg-menubar z-10 w-24 h-screen p-4 border-r-2 border-borderRight outline-none">
+        <div className="fixed top-0 left-0 bg-grey1 z-10 w-24 h-screen p-4 border-r-2 border-green2 outline-none">
             <div className='flex flex-col items-center'>
                 <img className="w-16 h-20 mt-2" src={folhaverde}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={cart} onClick={() => setModalIsOpen(true)}></img>
@@ -84,7 +84,7 @@ function MenuBar () {
             </div>
 
             {isMenuVisible && (
-            <div className="fixed top-0 left-24 w-80 h-screen bg-menubar text-white p-4 border-r-2 border-borderRight outline-none">
+            <div className="fixed top-0 left-24 w-80 h-screen bg-grey1 text-white p-4 border-r-2 border-borderRight outline-none">
                 <img src={flecha} className='w-12 m-2 cursor-pointer' onClick={() => setMenuVisible(false)}></img>
                 <div className='flex flex-col items-center gap-8 mt-16'>
                     <button className='w-64 h-14 bg-green1 font-primary text-[22px] rounded-borderCustom3' onClick={navigateToPageCadUsers}>Usuários</button>
@@ -102,7 +102,7 @@ function MenuBar () {
                 <img src={close} className='absolute right-5 -m-1 cursor-pointer' onClick={() => setModalIsOpen(false)}></img>
                     
                 {cartItems.length === 0 ? (
-                    <div className='flex items-center bg-cart-color1 h-cart-height1 m-10 border-none rounded-borderCustom outline-none'>
+                    <div className='flex items-center bg-grey2 h-[70vh] m-10 border-none rounded-[15px] outline-none'>
                         
                         <div className='flex flex-col items-center gap-8 mx-auto my-auto'>
                             <h1 className="text-white font-primary text-[50px]">Ops...</h1>

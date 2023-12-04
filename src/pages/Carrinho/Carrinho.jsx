@@ -61,17 +61,17 @@ const CarrinhoCompras = () => {
 
     return (
         <div>
-            <div className="flex flex-col items-center p-10 m-8 overflow-auto scroll-cart h-cart-itens">
+            <div className="flex flex-col items-center p-10 m-8 overflow-auto scroll-cart h-[70vh]">
                 
                 <div className="w-full flex flex-col gap-8">
                 {cartItems.map((item) => (
-                    <div key={item.id} className="w-full h-52 bg-cart-color1 flex flex-row items-center justify-between p-4 border-2 border-green1 rounded-borderCustom outline-none">
-                        <div className="w-cart-width2 flex flex-col m-1">
+                    <div key={item.id} className="w-full h-52 bg-grey2 flex flex-row items-center justify-between p-4 border-2 border-green1 rounded-[15px] outline-none">
+                        <div className="w-[50%] flex flex-col m-1">
                             <h1 className="font-primary text-white text-[25px]">{item.name}</h1>
-                            <hr className='bg-greenBg w-hr-cart border-none h-0.5 mt-1 mb-1'></hr>
+                            <hr className='bg-green1 w-[100%] border-none h-0.5 mt-1 mb-1'></hr>
                             <p className="text-white">{item.description}</p>
                             
-                            <button className="bg-red-800 w-24 h-10 mt-14 text-white rounded-borderCustom2 outline-none" onClick={() => handleShowModal(item.id)}>Excluir</button>
+                            <button className="bg-red-800 w-24 h-10 mt-10 text-white rounded-[10px] outline-none" onClick={() => handleShowModal(item.id)}>Excluir</button>
                             
                             <Modal
                                 isOpen={modalIsOpen}
@@ -83,19 +83,19 @@ const CarrinhoCompras = () => {
                                     <h1 className="text-white text-[25px] font-primary">Deseja tirar esse produto do carrinho?</h1>
 
                                     <div className="flex flex-row justify-between gap-20">
-                                        <button className="w-60 h-14 bg-red-800 rounded-borderCustom3 text-white text-[20px] font-primary" onClick={handleCloseModal}>Não</button>
-                                        <button className="w-60 h-14 bg-greenBg rounded-borderCustom3 text-white text-[20px] font-primary" onClick={handleDeleteProduct}>Sim</button>
+                                        <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal}>Não</button>
+                                        <button className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={handleDeleteProduct}>Sim</button>
                                     </div>
                                 </div>
                             </Modal>
                         </div>
 
-                        <div className="w-cart-width2 flex flex-row justify-center items-center gap-20 m-10">
+                        <div className="w-[50%] flex flex-row justify-center items-center gap-20 m-10">
                             <div className="flex flex-col items-center gap-2">
                                 <h1 className="font-primary text-white text-[20px]">Quantidade</h1>
                                 <div className="flex flex-row items-center gap-5">
                                     <AiOutlineMinus className="text-white text-[30px] cursor-pointer" onClick={() => removeQuantity(item.id)}/>
-                                    <div className="flex flex-row items-center justify-center w-16 h-10 mt-2 bg-black border-2 border-greenBg rounded-borderCustom3 text-white">{item.quantity}</div>
+                                    <div className="flex flex-row items-center justify-center w-16 h-10 mt-2 bg-black border-2 border-green1 rounded-[5px] text-white">{item.quantity}</div>
                                     <AiOutlinePlus className="text-white text-[30px] cursor-pointer" onClick={() => incrementQuantity(item.id)}/>
                                 </div>
                             </div>
@@ -112,9 +112,9 @@ const CarrinhoCompras = () => {
                 ))}
                 </div>
             </div>
-            <div className="flex flex-row gap-10 items-center float-right mr-20 -mt-4">
+            <div className="flex flex-row gap-10 items-center float-right mr-20 -mt-6">
                 <h1 className="text-white text-[25px] font-primary">Valor Total: {calcularSubtotal().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h1>
-                <button className="w-64 h-14 bg-green1 text-white text-[22px] font-primary rounded-borderCustom">Finalizar Compra</button>
+                <button className="w-64 h-14 bg-green1 text-white text-[22px] font-primary rounded-[15px]">Finalizar Compra</button>
             </div>
         </div>
     )
