@@ -23,10 +23,10 @@ function AppRoutes() {
             <Routes>
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/suporte/*" element={<Layout><Suporte /></Layout>} />
                 <Route element={<PrivateRoutes />} >
                 
                     <Route path="/initial-page/*" element={<Layout><PaginaInicial /></Layout>} />
-                    <Route path="/suporte/*" element={<Layout><Suporte /></Layout>} />
                     <Route path="/initial-page/*" element={<Layout><PaginaInicial /></Layout>} />
                     <Route path="/cad-users/*" element={<Layout><CadastraUsuarios /></Layout>} />
                     <Route path="/cad-products/*" element={<Layout><CadastraProdutos /></Layout>} />

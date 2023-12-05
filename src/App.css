@@ -8,6 +8,10 @@ body {
   background-color: #212121;
 }
 
+.border-custom {
+  border-right: solid 2px #0A0A0A;
+}
+
 .custom-swal-popup {
   display: flex;
   justify-content: center;

@@ -24,7 +24,7 @@ function PaginaInicial() {
   const pages = Math.ceil(products.length / productsPerPage)
   const startIndex = currentPage * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex)
+  const currentProducts = products.slice(startIndex, endIndex);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -136,7 +136,6 @@ function PaginaInicial() {
                       className="ml-auto w-9 h-9 cursor-pointer"
                       src={star}
                       alt="Star Icon"
-                      onClick={() => adicionarProdutoAoCarrinho(product)}
                       style={{ filter: favoriteProducts.includes(product.id) ? "brightness(100%)" : "brightness(100%)" }}
                     />
                   )}
