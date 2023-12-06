@@ -13,13 +13,17 @@ function CadastraUsuarios() {
     const [search, setSearch] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [isListVisible, setIsListVisible] = useState(false);
-    const [usersPerPage, setUsersPerPage] = useState(15);
+    const [usersPerPage, setUsersPerPage] = useState(13);
     const [currentPage, setCurrentPage] = useState(0);
 
     const pages = Math.ceil(users.length / usersPerPage)
     const startIndex = currentPage * usersPerPage;
     const endIndex = startIndex + usersPerPage;
-    const currentUsers = users.slice(startIndex, endIndex);
+    const currentUsers = [...users.slice(startIndex, endIndex)];
+
+    const currentIdStart = currentPage * usersPerPage + 1;
+
+    const emptyRowsIdStart = currentIdStart + currentUsers.length;
 
     const userData = localStorage.getItem("userData");
     console.log(userData);
@@ -53,8 +57,11 @@ function CadastraUsuarios() {
         setFilteredUsers(filtered);
         setIsListVisible(true);
       }, [search, users]);
-    
-    
+
+
+      const emptyRowsCount = usersPerPage - currentUsers.length;
+      const emptyRows = Array.from({ length: emptyRowsCount }, (_, index) => ({ id: index + currentUsers.length + 1 }));
+      
       const handleNextPage = () => {
         if (currentPage < pages - 1) {
           setCurrentPage(currentPage + 1);
@@ -99,10 +106,10 @@ function CadastraUsuarios() {
                     <table className="w-[100%] bg-grey1 border-green1 border-2 mt-4">
                         <thead className="bg-green1 text-white">
                         <tr>
-                            <th className="w-4 border-green1 border-custom border-b-2 p-2 font-primary text-white text-center">Id</th>
-                            <th className="w-40 border-green1 border-b-2 p-2 font-primary text-white text-center">Nome Completo</th>
-                            <th className="w-32 border-green1 border-b-2 p-2 font-primary text-white text-center">CPF</th>
-                            <th className="w-32 border-green1 border-b-2 p-2 font-primary text-white text-center">Ações</th>
+                            <th className="w-4 border-green1 border-custom border-b-2 p-2 font-primary text-white text-[20px] text-center">Id</th>
+                            <th className="w-40 border-green1 border-b-2 p-2 font-primary text-white text-[20px] text-center">Nome Completo</th>
+                            <th className="w-32 border-green1 border-b-2 p-2 font-primary text-white text-[20px] text-center">CPF</th>
+                            <th className="w-32 border-green1 border-b-2 p-2 font-primary text-white text-[20px] text-center">Ações</th>
                         </tr>
                         </thead>
 
@@ -111,20 +118,20 @@ function CadastraUsuarios() {
                         {Array.isArray(currentUsers) && currentUsers.length > 0 ? (
                         currentUsers.map((user, index) => (
                             <tr key={index + 1}>
-                            <td className="w-4 border-green1 border-2 p-2 font-primary text-white text-center">{index +1}</td>
-                        
-                            <td className="w-40 border-green1 border-2 p-2 font-primary text-white text-center">
-                            <div className="flex flex-row justify-center items-center">
-                                {user.name} 
-                                {user.admin && <img className="w-4 ml-2 absolute right-[30%] -m-4" src={adminicon} alt="Admin Icon" />}
-                            </div>
-                            </td>
+                                <td className="w-4 border-green1 border-2 p-2 font-primary text-white text-center">{currentIdStart + index}</td>
+                            
+                                <td className="w-40 border-green1 border-2 p-2 font-primary text-white text-center">
+                                <div className="flex flex-row justify-center items-center">
+                                    {user.name} 
+                                    {user.admin && <img className="w-4 ml-2 absolute right-[30%] -m-4" src={adminicon} alt="Admin Icon" />}
+                                </div>
+                                </td>
 
 
-                            <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center">{user.cpf.replace(/\D/g, '')
-                            .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}
-                            </td>
-                            <td className="w-32 border-green1 border-2 p-2 text-center"></td>
+                                <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center">{user.cpf.replace(/\D/g, '')
+                                .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}
+                                </td>
+                                <td className="w-32 border-green1 border-2 p-2 text-center"></td>
                             </tr>
                         ))
                         ) : (
@@ -133,6 +140,16 @@ function CadastraUsuarios() {
                         </tr>
                         )}
 
+                        <>
+                        {emptyRows.map((emptyRow, index) => (
+                            <tr key={`empty-${emptyRow.id}`}>
+                            <td className="w-4 border-green1 border-2 p-2 font-primary text-white text-center">{emptyRowsIdStart + index}</td>
+                            <td className="w-40 border-green1 border-2 p-2 font-primary text-white text-center"></td>
+                            <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center"></td>
+                            <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center"></td>
+                            </tr>
+                        ))}
+                        </>
                         
                         </tbody>
                     </table>
