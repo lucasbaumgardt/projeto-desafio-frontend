@@ -9,6 +9,9 @@ import searchIcon from '../../assets/search.svg';
 import attention from '../../assets/attention.svg';
 import admintrue from '../../assets/admintrue.svg';
 import adminfalse from '../../assets/adminfalse.svg';
+import listusers from '../../assets/list.svg';
+import editinfo from '../../assets/edit.svg';
+import deleteuser from '../../assets/delete.svg';
 import api from "../../services/api";
 import { AuthContext } from "../../contexts/Users/authContext";
 
@@ -43,6 +46,33 @@ function CadastraUsuarios() {
             }
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const handleEdit = async () => {
+        try {
+            const response = await api.put("/pessoas", {
+                updatorCpf: cpfFromStorage,
+                targetCpf: cpf,
+                update: {
+                    name: name,
+                    admin: admin,
+                }
+            });
+            setModalIsOpen3(false);
+            setName("");
+            setCpf("")
+
+            if (response.status === 201) {
+                Swal.fire("Edição bem-sucedida", "", "success");
+                return true;
+            } else {
+                console.log('erro')
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire("Erro ao editar", "Por favor, tente novamente.", "error");
         }
     };
     
@@ -113,6 +143,8 @@ function CadastraUsuarios() {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalIsOpen2, setModalIsOpen2] = useState(false);
+    const [modalIsOpen3, setModalIsOpen3] = useState(false);
+    const [userToEdit, setUserToEdit] = useState(null);
     const [userToDelete, setUserToDelete] = useState(null);
 
     const handleShowModal = (userId) => {
@@ -135,6 +167,16 @@ function CadastraUsuarios() {
         setModalIsOpen2(false);
     };
 
+    const handleShowModal3 = (userId) => {
+        setUserToDelete(userId);
+        setModalIsOpen3(true);
+    };
+
+    const handleCloseModal3 = () => {
+        setUserToEdit(null);
+        setModalIsOpen3(false);
+    };
+
     const handleDeleteUser = () => {
         if (userToDelete) {
             removeFromCart(userToDelete);
@@ -147,8 +189,8 @@ function CadastraUsuarios() {
           position: 'fixed',
           top: '50%',
           left: '50%',
-          width: '40%',
-          height: '40vh',
+          width: '35%',
+          height: '45vh',
           transform: 'translate(-50%, -50%)',
           backgroundColor: '#0A0A0A',
           border: '2px solid #509D46',
@@ -208,7 +250,7 @@ function CadastraUsuarios() {
                     <Modal
                         isOpen={modalIsOpen}
                         onRequestClose={() => setModalIsOpen(false)}
-                        contentLabel="Carrinho de Compras"
+                        contentLabel="Cadastrar Novo Usuário"
                         style={customStyles}
                         >
                         <div className="w-full h-full flex flex-col justify-between items-center gap-2">
@@ -218,7 +260,7 @@ function CadastraUsuarios() {
                                 <p className="text-white text-[20px] font-primary">Nome Completo</p>
                                 <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='bg-black w-[100%] 
                                 text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
-                                outline-none'></input>
+                                outline-none' placeholder="Digite o Nome"></input>
                             </div>
 
                             <div className="w-[90%] flex flex-row justify-center items-center gap-12">
@@ -227,7 +269,7 @@ function CadastraUsuarios() {
                                             <p className="text-white text-[20px] font-primary">CPF</p>
                                             <input type='text' value={cpf} onChange={(e) => setCpf(e.target.value)} className='bg-black w-[80%] 
                                             text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
-                                            outline-none'></input>
+                                            outline-none' placeholder="Digite o CPF"></input>
                                         </div>
 
                                         <div className="w-[50%] flex flex-col">
@@ -246,6 +288,50 @@ function CadastraUsuarios() {
                             <div className="flex flex-row justify-between gap-20">
                                 <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal}>Cancelar</button>
                                 <button type="submit" className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={() => handleRegister()}>Salvar</button>
+                            </div>
+                        </div>
+                    </Modal>
+                    <Modal
+                        isOpen={modalIsOpen3}
+                        onRequestClose={() => setModalIsOpen3(false)}
+                        contentLabel="Editar Usuário"
+                        style={customStyles}
+                        >
+                        <div className="w-full h-full flex flex-col justify-between items-center gap-2">
+                            <h1 className="text-white text-[25px] font-primary">Editar Usuário</h1>
+
+                            <div className="w-[90%] flex flex-col justify-between gap-2">
+                                <p className="text-white text-[20px] font-primary">Nome Completo</p>
+                                <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='bg-black w-[100%] 
+                                text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
+                                outline-none' placeholder="Digite o Nome"></input>
+                            </div>
+
+                            <div className="w-[90%] flex flex-row justify-center items-center gap-12">
+                                    <div className="w-[100%] flex flex-row justify-between items-center">
+                                        <div className="w-[100%] flex flex-col gap-2">
+                                            <p className="text-white text-[20px] font-primary">CPF</p>
+                                            <input type='text' value={cpf} onChange={(e) => setCpf(e.target.value)} className='bg-black w-[80%] 
+                                            text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
+                                            outline-none' placeholder={"Digite o CPF"}></input>
+                                        </div>
+
+                                        <div className="w-[50%] flex flex-col">
+                                            <p className="text-white text-[20px] font-primary">Administrador</p>
+                                            <button
+                                                className="w-16 h-12"
+                                                onClick={toggleAdmin}
+                                            >
+                                                {adminIcon && <img className="w-16 h-12" src={adminIcon} alt="Admin Icon" />}
+                                                {admin ? true : false}
+                                            </button>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div className="flex flex-row justify-between gap-20">
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal3}>Cancelar</button>
+                                <button type="submit" className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={() => handleEdit()}>Salvar</button>
                             </div>
                         </div>
                     </Modal>
@@ -298,7 +384,17 @@ function CadastraUsuarios() {
                                 <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center">{user.cpf.replace(/\D/g, '')
                                 .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}
                                 </td>
-                                <td className="w-32 border-green1 border-2 p-2 text-center"></td>
+                                <td className="w-32 border-green1 border-2 p-2 text-center">
+                                    <div className="w-[100%] h-full flex flex-row gap-4">
+                                        <div className="">
+                                            <img className="w-6" src={listusers}></img>
+                                        </div>
+                                        <div className="">
+                                            <img className="w-6 cursor-pointer" src={editinfo} onClick={() => setModalIsOpen3(true)}></img>
+                                        </div>
+                                        <img className="w-6 absolute right-4 cursor-pointer" src={deleteuser} onClick={() => setModalIsOpen2(true)}></img>
+                                    </div>
+                                </td>
                             </tr>
                         ))
                         ) : (
