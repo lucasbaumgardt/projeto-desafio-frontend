@@ -28,6 +28,7 @@ function MenuBar () {
     const userDataObeject = JSON.parse(userData);
 
     const isAdmin = userDataObeject && userDataObeject.person && userDataObeject.person.admin;
+    const userName = userDataObeject && userDataObeject.person && userDataObeject.person.name;
 
     const customStyles = {
         content: {
@@ -56,6 +57,11 @@ function MenuBar () {
         },
     };
 
+    const navigateToInitialPage = () => {
+        navigate('/initial-page');
+        setMenuVisible(false);
+    }
+
     const navigateToPageCadUsers = () => {
         navigate("/cad-users");
         setMenuVisible(false);
@@ -74,7 +80,7 @@ function MenuBar () {
     return (
         <div className="fixed top-0 left-0 bg-grey1 z-10 w-24 h-screen p-4 border-r-2 border-green2 outline-none">
             <div className='flex flex-col items-center'>
-                <img className="w-16 h-20 mt-2" src={folhaverde}></img>
+                <img className="w-16 h-20 mt-2 cursor-pointer" src={folhaverde} onClick={navigateToInitialPage}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={cart} onClick={() => setModalIsOpen(true)}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={clock}></img>
                 {isAdmin && (
@@ -84,8 +90,11 @@ function MenuBar () {
             </div>
 
             {isMenuVisible && (
-            <div className="fixed top-0 left-24 w-80 h-screen bg-grey1 text-white p-4 border-r-2 border-borderRight outline-none">
-                <img src={flecha} className='w-12 m-2 cursor-pointer' onClick={() => setMenuVisible(false)}></img>
+            <div className="fixed top-0 left-24 w-80 h-screen bg-grey1 text-white p-4 border-r-2 border-green2 outline-none">
+                <div className='flex flex-row justify-center items-center gap-6 m-2'>
+                    <img src={flecha} className='w-12 cursor-pointer' onClick={() => setMenuVisible(false)}></img>
+                    <h1 className='font-primary text-white text-[20px]'>Olá, {userName}</h1>
+                </div>
                 <div className='flex flex-col items-center gap-8 mt-16'>
                     <button className='w-64 h-14 bg-green1 font-primary text-[22px] rounded-borderCustom3' onClick={navigateToPageCadUsers}>Usuários</button>
                     <button className='w-64 h-14 bg-green1 font-primary text-[22px] rounded-borderCustom3' onClick={navigateToPageCadProducts}>Produtos</button>

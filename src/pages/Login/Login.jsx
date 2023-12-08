@@ -9,41 +9,9 @@ import { AuthContext } from "../../contexts/Users/authContext";
 
 function Login () {
     const { signIn, signed } = useContext(AuthContext);
-
-    const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
-    const [admin, setAdmin] = useState(false);
-
-    const [nameRegister, setNameRegister] = useState("");
-    const [cpfRegister, setCpfRegister] = useState("");
 
     const centerButtonClass = "mx-auto my-auto";
-
-    // const handleLogin = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //     const response = await api.get(`/pessoas?cpf=${cpf}`);
-
-    //     console.log(response.data)
-
-    //       if (response.data && response.data.person.admin === true) {
-    //         toast.success(`Seja bem-vindo novamente ${response.data.person.name}`, {
-    //           position: 'bottom-right',
-    //           autoClose: 2000,
-    //           hideProgressBar: false,
-    //           closeOnClick: true,
-    //           pauseOnHover: true,
-    //           draggable: true,
-    //           progress: undefined,
-    //         });
-            
-    //         navigate('/initial-page');
-    //       }
-    //     } catch (error) {
-    //         console.log(error);
-    //         Swal.fire("Erro ao fazer login", "Verifique suas credenciais e tente novamente", "error");
-    //     }
-    // };
 
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -53,26 +21,6 @@ function Login () {
       await signIn(data);
     };
     console.log(signed); 
-
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        try {
-        const response = await api.post("/pessoas", {
-            name: nameRegister,
-            cpf: cpfRegister,
-            admin: admin,
-        });
-
-        if (response.status === 200) {
-            Swal.fire("Registro bem-sucedido", "Faça login para continuar", "success");
-            setNameRegister("");
-            setCpfRegister("");
-        }
-        } catch (error) {
-            console.log(error);
-            Swal.fire("Erro ao registrar", "Verifique se o email já está cadastrado", "error");
-        }
-    };
 
     if (!signed) {
     return (

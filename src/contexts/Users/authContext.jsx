@@ -7,6 +7,7 @@ import api from "../../services/api";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
     const [userData, setUserData] = useState(() => {
         const storedData = localStorage.getItem("userData");
         return storedData ? JSON.parse(storedData) : null;
@@ -56,6 +57,27 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const signUp = async ({ name, cpf, admin }) => {
+        try {
+            const response = await api.post("/pessoas", {
+                name,
+                cpf,
+                admin,
+            });
+
+            if (response.status === 201) {
+                Swal.fire("Registro bem-sucedido", "Faça login para continuar", "success");
+                return true;
+            } else {
+                console.log('erro')
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire("Erro ao registrar", "Verifique se o cpf já está cadastrado", "error");
+        }
+    };
+
     const signOut = () => {
         localStorage.removeItem("userData");
         setUserData(null);
@@ -67,6 +89,7 @@ export const AuthProvider = ({ children }) => {
         value={{
             userData,
             signIn,
+            signUp,
             signOut,
             // isCommonUser: userData && !userData.person.admin,
             // isAdmin: userData && userData.person.admin,

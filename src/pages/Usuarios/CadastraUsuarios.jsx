@@ -1,14 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import Modal from 'react-modal';
 import '../../App.css';
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronLeft } from "react-icons/bi";
 import { BiChevronRight } from "react-icons/bi";
 import adminicon from '../../assets/admin.svg';
 import searchIcon from '../../assets/search.svg';
+import attention from '../../assets/attention.svg';
+import admintrue from '../../assets/admintrue.svg';
+import adminfalse from '../../assets/adminfalse.svg';
 import api from "../../services/api";
+import { AuthContext } from "../../contexts/Users/authContext";
 
-function CadastraUsuarios() {   
+function CadastraUsuarios() {
+    const { signUp } = useContext(AuthContext);
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [admin, setAdmin] = useState(false);
+    const [adminIcon, setAdminIcon] = useState(adminfalse);   
     const [users, setUsers] = useState([]);
+
+    const toggleAdmin = () => {
+        setAdmin(!admin); 
+        setAdminIcon(admin ? adminfalse : admintrue);
+    };    
+
+    const handleRegister = async () => {
+        try {
+            const data = {
+                name,
+                cpf,
+                admin
+            };
+            const registerSuccessFul = await signUp(data);
+
+            if (registerSuccessFul) {
+                setModalIsOpen(false);
+                setName("");
+                setCpf("");
+            } else {
+                console.log('erro');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
 
     const [search, setSearch] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -59,29 +96,159 @@ function CadastraUsuarios() {
       }, [search, users]);
 
 
-      const emptyRowsCount = usersPerPage - currentUsers.length;
-      const emptyRows = Array.from({ length: emptyRowsCount }, (_, index) => ({ id: index + currentUsers.length + 1 }));
-      
-      const handleNextPage = () => {
-        if (currentPage < pages - 1) {
-          setCurrentPage(currentPage + 1);
-        }
-      };
+    const emptyRowsCount = usersPerPage - currentUsers.length;
+    const emptyRows = Array.from({ length: emptyRowsCount }, (_, index) => ({ id: index + currentUsers.length + 1 }));
     
-      const handlePrevPage = () => {
-        if (currentPage > 0) {
-          setCurrentPage(currentPage - 1);
+    const handleNextPage = () => {
+        if (currentPage < pages - 1) {
+            setCurrentPage(currentPage + 1);
         }
-      };
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalIsOpen2, setModalIsOpen2] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
+
+    const handleShowModal = (userId) => {
+        setUserToDelete(userId);
+        setModalIsOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setUserToDelete(null);
+        setModalIsOpen(false);
+    };
+
+    const handleShowModal2 = (userId) => {
+        setUserToDelete(userId);
+        setModalIsOpen2(true);
+    };
+
+    const handleCloseModal2 = () => {
+        setUserToDelete(null);
+        setModalIsOpen2(false);
+    };
+
+    const handleDeleteUser = () => {
+        if (userToDelete) {
+            removeFromCart(userToDelete);
+            handleCloseModal();
+        }
+    };
+
+    const customStyles = {
+        content: {
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          width: '40%',
+          height: '40vh',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#0A0A0A',
+          border: '2px solid #509D46',
+          borderRadius: '10px',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+          overflowY: 'hidden'
+        },
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#000000',
+          zIndex: 999,
+        },
+    };
+
+    const customStyles2 = {
+        content: {
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          width: '40%',
+          height: '30vh',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#0A0A0A',
+          border: '2px solid #509D46',
+          borderRadius: '15px',
+          padding: '20px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+          overflowY: 'hidden'
+        },
+        overlay: {
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#000000',
+          zIndex: 999,
+        },
+    };
 
     return (
         <div className="flex flex-col justify-center">
 
             <div className="w-[90%] mx-[8%] my-auto mt-10">
                 <div className="w-[100%] flex flex-row justify-between">
-                    <button className="flex flex-row justify-center items-center gap-8 bg-green1 w-56 h-12 text-white text-[20px] font-primary rounded-[5px]">
+                    <button className="flex flex-row justify-center items-center gap-8 bg-green1 w-56 h-12 text-white text-[20px] font-primary rounded-[5px]" 
+                    onClick={() => setModalIsOpen(true)}>
                         <AiOutlinePlus className="text-[30px]"/> Cadastrar
                     </button>
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={() => setModalIsOpen(false)}
+                        contentLabel="Carrinho de Compras"
+                        style={customStyles}
+                        >
+                        <div className="w-full h-full flex flex-col justify-between items-center gap-2">
+                            <h1 className="text-white text-[25px] font-primary">Novo Usuário</h1>
+
+                            <div className="w-[90%] flex flex-col justify-between gap-2">
+                                <p className="text-white text-[20px] font-primary">Nome Completo</p>
+                                <input type='text' value={name} onChange={(e) => setName(e.target.value)} className='bg-black w-[100%] 
+                                text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
+                                outline-none'></input>
+                            </div>
+
+                            <div className="w-[90%] flex flex-row justify-center items-center gap-12">
+                                    <div className="w-[100%] flex flex-row justify-between items-center">
+                                        <div className="w-[100%] flex flex-col gap-2">
+                                            <p className="text-white text-[20px] font-primary">CPF</p>
+                                            <input type='text' value={cpf} onChange={(e) => setCpf(e.target.value)} className='bg-black w-[80%] 
+                                            text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] 
+                                            outline-none'></input>
+                                        </div>
+
+                                        <div className="w-[50%] flex flex-col">
+                                            <p className="text-white text-[20px] font-primary">Administrador</p>
+                                            <button
+                                                className="w-16 h-12"
+                                                onClick={toggleAdmin}
+                                            >
+                                                {adminIcon && <img className="w-16 h-12" src={adminIcon} alt="Admin Icon" />}
+                                                {admin ? true : false}
+                                            </button>
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div className="flex flex-row justify-between gap-20">
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal}>Cancelar</button>
+                                <button type="submit" className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={() => handleRegister()}>Salvar</button>
+                            </div>
+                        </div>
+                    </Modal>
                     <div className='relative w-[40%] mt-2'>
                         <input type='search' onClick={() => setIsListVisible(true)} onChange={(e) => setSearch(e.target.value)} className='bg-black w-[100%] text-white font-primary border sm:h-8 md:h-8 lg:h-10 xl:h-10 p-4 border-green1 rounded-[15px] outline-none'></input>
                         
@@ -153,6 +320,23 @@ function CadastraUsuarios() {
                         
                         </tbody>
                     </table>
+
+                    <Modal
+                        isOpen={modalIsOpen2}
+                        onRequestClose={() => setModalIsOpen2(false)}
+                        contentLabel="Carrinho de Compras"
+                        style={customStyles2}
+                        >
+                        <div className="w-full h-full flex flex-col justify-center items-center gap-6">
+                            <img src={attention} alt="atenção" className="w-20 h-20"></img>
+                            <h1 className="text-white text-[25px] font-primary">Tem certeza que deseja deletar este usuário?</h1>
+
+                            <div className="flex flex-row justify-between gap-20">
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal2}>Não</button>
+                                <button className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={handleDeleteUser}>Sim</button>
+                            </div>
+                        </div>
+                    </Modal>
 
                     <div className='w-[100%] h-10 flex flex-row justify-center items-center gap-2 absolute bottom-4'>
 
