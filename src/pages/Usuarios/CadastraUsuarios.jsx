@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import Swal from "sweetalert2";
 import Modal from 'react-modal';
 import '../../App.css';
 import { AiOutlinePlus } from "react-icons/ai";
@@ -23,60 +24,6 @@ function CadastraUsuarios() {
     const [adminIcon, setAdminIcon] = useState(adminfalse);   
     const [users, setUsers] = useState([]);
 
-    const toggleAdmin = () => {
-        setAdmin(!admin); 
-        setAdminIcon(admin ? adminfalse : admintrue);
-    };    
-
-    const handleRegister = async () => {
-        try {
-            const data = {
-                name,
-                cpf,
-                admin
-            };
-            const registerSuccessFul = await signUp(data);
-
-            if (registerSuccessFul) {
-                setModalIsOpen(false);
-                setName("");
-                setCpf("");
-            } else {
-                console.log('erro');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleEdit = async () => {
-        try {
-            const response = await api.put("/pessoas", {
-                updatorCpf: cpfFromStorage,
-                targetCpf: cpf,
-                update: {
-                    name: name,
-                    admin: admin,
-                }
-            });
-            setModalIsOpen3(false);
-            setName("");
-            setCpf("")
-
-            if (response.status === 201) {
-                Swal.fire("Edição bem-sucedida", "", "success");
-                return true;
-            } else {
-                console.log('erro')
-                return false;
-            }
-        } catch (error) {
-            console.log(error);
-            Swal.fire("Erro ao editar", "Por favor, tente novamente.", "error");
-        }
-    };
-    
-
     const [search, setSearch] = useState("");
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [isListVisible, setIsListVisible] = useState(false);
@@ -89,13 +36,17 @@ function CadastraUsuarios() {
     const currentUsers = [...users.slice(startIndex, endIndex)];
 
     const currentIdStart = currentPage * usersPerPage + 1;
-
     const emptyRowsIdStart = currentIdStart + currentUsers.length;
 
     const userData = localStorage.getItem("userData");
     console.log(userData);
-
     const cpfFromStorage = userData ? JSON.parse(userData).person.cpf : null;
+
+    const [modalCadIsOpen, setModalCadIsOpen] = useState(false);
+    const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
+    const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
+    const [userToEdit, setUserToEdit] = useState(null);
+    const [userToDelete, setUserToDelete] = useState(null);
 
     useEffect(() => {
         if (cpfFromStorage) {
@@ -125,6 +76,58 @@ function CadastraUsuarios() {
         setIsListVisible(true);
       }, [search, users]);
 
+      const toggleAdmin = () => {
+        setAdmin(!admin); 
+        setAdminIcon(admin ? adminfalse : admintrue);
+    };    
+
+    const handleRegister = async () => {
+        try {
+            const data = {
+                name,
+                cpf,
+                admin
+            };
+            const registerSuccessFul = await signUp(data);
+
+            if (registerSuccessFul) {
+                setModalCadIsOpen(false);
+                setName("");
+                setCpf("");
+            } else {
+                console.log('erro');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleEdit = async () => {
+        try {
+            const response = await api.put("/pessoas", {
+                updatorCpf: cpfFromStorage,
+                targetCpf: cpf,
+                update: {
+                    name: name,
+                    admin: admin,
+                }
+            });
+            setModalEditIsOpen(false);
+            setName("");
+            setCpf("")
+
+            if (response.status === 200) {
+                Swal.fire("Edição bem-sucedida", "", "success");
+                return true;
+            } else {
+                console.log('erro')
+                return false;
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire("Erro ao editar", "Por favor, tente novamente.", "error");
+        }
+    };
 
     const emptyRowsCount = usersPerPage - currentUsers.length;
     const emptyRows = Array.from({ length: emptyRowsCount }, (_, index) => ({ id: index + currentUsers.length + 1 }));
@@ -141,47 +144,20 @@ function CadastraUsuarios() {
         }
     };
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [modalIsOpen2, setModalIsOpen2] = useState(false);
-    const [modalIsOpen3, setModalIsOpen3] = useState(false);
-    const [userToEdit, setUserToEdit] = useState(null);
-    const [userToDelete, setUserToDelete] = useState(null);
-
-    const handleShowModal = (userId) => {
-        setUserToDelete(userId);
-        setModalIsOpen(true);
-    };
-
-    const handleCloseModal = () => {
+    const closeModalCad = () => {
         setUserToDelete(null);
-        setModalIsOpen(false);
+        setModalCadIsOpen(false);
     };
 
-    const handleShowModal2 = (userId) => {
-        setUserToDelete(userId);
-        setModalIsOpen2(true);
-    };
 
-    const handleCloseModal2 = () => {
+    const closeDeleteModal = () => {
         setUserToDelete(null);
-        setModalIsOpen2(false);
+        setModalDeleteIsOpen(false);
     };
 
-    const handleShowModal3 = (userId) => {
-        setUserToDelete(userId);
-        setModalIsOpen3(true);
-    };
-
-    const handleCloseModal3 = () => {
+    const closeModalEdit = () => {
         setUserToEdit(null);
-        setModalIsOpen3(false);
-    };
-
-    const handleDeleteUser = () => {
-        if (userToDelete) {
-            removeFromCart(userToDelete);
-            handleCloseModal();
-        }
+        setModalEditIsOpen(false);
     };
 
     const customStyles = {
@@ -244,12 +220,12 @@ function CadastraUsuarios() {
             <div className="w-[90%] mx-[8%] my-auto mt-10">
                 <div className="w-[100%] flex flex-row justify-between">
                     <button className="flex flex-row justify-center items-center gap-8 bg-green1 w-56 h-12 text-white text-[20px] font-primary rounded-[5px]" 
-                    onClick={() => setModalIsOpen(true)}>
+                    onClick={() => setModalCadIsOpen(true)}>
                         <AiOutlinePlus className="text-[30px]"/> Cadastrar
                     </button>
                     <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={() => setModalIsOpen(false)}
+                        isOpen={modalCadIsOpen}
+                        onRequestClose={() => setModalCadIsOpen(false)}
                         contentLabel="Cadastrar Novo Usuário"
                         style={customStyles}
                         >
@@ -286,14 +262,14 @@ function CadastraUsuarios() {
                             </div>
 
                             <div className="flex flex-row justify-between gap-20">
-                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal}>Cancelar</button>
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={closeModalCad}>Cancelar</button>
                                 <button type="submit" className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={() => handleRegister()}>Salvar</button>
                             </div>
                         </div>
                     </Modal>
                     <Modal
-                        isOpen={modalIsOpen3}
-                        onRequestClose={() => setModalIsOpen3(false)}
+                        isOpen={modalEditIsOpen}
+                        onRequestClose={() => setModalEditIsOpen(false)}
                         contentLabel="Editar Usuário"
                         style={customStyles}
                         >
@@ -330,7 +306,7 @@ function CadastraUsuarios() {
                             </div>
 
                             <div className="flex flex-row justify-between gap-20">
-                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal3}>Cancelar</button>
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={closeModalEdit}>Cancelar</button>
                                 <button type="submit" className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={() => handleEdit()}>Salvar</button>
                             </div>
                         </div>
@@ -390,9 +366,9 @@ function CadastraUsuarios() {
                                             <img className="w-6" src={listusers}></img>
                                         </div>
                                         <div className="">
-                                            <img className="w-6 cursor-pointer" src={editinfo} onClick={() => setModalIsOpen3(true)}></img>
+                                            <img className="w-6 cursor-pointer" src={editinfo} onClick={() => setModalEditIsOpen(true)}></img>
                                         </div>
-                                        <img className="w-6 absolute right-4 cursor-pointer" src={deleteuser} onClick={() => setModalIsOpen2(true)}></img>
+                                        <img className="w-6 absolute right-4 cursor-pointer" src={deleteuser} onClick={() => setModalDeleteIsOpen(true)}></img>
                                     </div>
                                 </td>
                             </tr>
@@ -418,8 +394,8 @@ function CadastraUsuarios() {
                     </table>
 
                     <Modal
-                        isOpen={modalIsOpen2}
-                        onRequestClose={() => setModalIsOpen2(false)}
+                        isOpen={modalDeleteIsOpen}
+                        onRequestClose={() => setModalDeleteIsOpen(false)}
                         contentLabel="Carrinho de Compras"
                         style={customStyles2}
                         >
@@ -428,8 +404,8 @@ function CadastraUsuarios() {
                             <h1 className="text-white text-[25px] font-primary">Tem certeza que deseja deletar este usuário?</h1>
 
                             <div className="flex flex-row justify-between gap-20">
-                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={handleCloseModal2}>Não</button>
-                                <button className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary" onClick={handleDeleteUser}>Sim</button>
+                                <button className="w-60 h-14 bg-red-800 rounded-[5px] text-white text-[20px] font-primary" onClick={closeDeleteModal}>Não</button>
+                                <button className="w-60 h-14 bg-green1 rounded-[5px] text-white text-[20px] font-primary">Sim</button>
                             </div>
                         </div>
                     </Modal>
