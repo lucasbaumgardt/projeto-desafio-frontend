@@ -155,6 +155,13 @@ function CadastraUsuarios() {
         setModalDeleteIsOpen(false);
     };
 
+    const openEditModal = (user) => {
+        setUserToEdit(user);
+        setName(user.name);
+        setCpf(user.cpf);
+        setModalEditIsOpen(true);
+      };
+
     const closeModalEdit = () => {
         setUserToEdit(null);
         setModalEditIsOpen(false);
@@ -269,7 +276,10 @@ function CadastraUsuarios() {
                     </Modal>
                     <Modal
                         isOpen={modalEditIsOpen}
-                        onRequestClose={() => setModalEditIsOpen(false)}
+                        onRequestClose={() => {
+                            setModalEditIsOpen(false);
+                            setUserToEdit(null); 
+                        }}
                         contentLabel="Editar Usuário"
                         style={customStyles}
                         >
@@ -366,7 +376,7 @@ function CadastraUsuarios() {
                                             <img className="w-6" src={listusers}></img>
                                         </div>
                                         <div className="">
-                                            <img className="w-6 cursor-pointer" src={editinfo} onClick={() => setModalEditIsOpen(true)}></img>
+                                            <img className="w-6 cursor-pointer" src={editinfo} onClick={() => openEditModal(user)}></img>
                                         </div>
                                         <img className="w-6 absolute right-4 cursor-pointer" src={deleteuser} onClick={() => setModalDeleteIsOpen(true)}></img>
                                     </div>
