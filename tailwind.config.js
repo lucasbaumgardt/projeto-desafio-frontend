@@ -11,6 +11,8 @@ export default {
         input: "#414141",
         green1: "#509D46",
         green2: "#3CB62C",
+        'grey1': '#0a0a0a',
+        'grey2': '#212121',
         cartmessage: "#8C8C8C"
       },
       backgroundColor:{

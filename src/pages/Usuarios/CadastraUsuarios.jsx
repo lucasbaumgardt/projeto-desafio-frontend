@@ -224,7 +224,7 @@ function CadastraUsuarios() {
     return (
         <div className="flex flex-col justify-center">
 
-            <div className="w-[90%] mx-[8%] my-auto mt-10">
+            <div className="w-[90%] md:w-[80%] xl:w-[90%] mx-[16%] my-auto mt-10">
                 <div className="w-[100%] flex flex-row justify-between">
                     <button className="flex flex-row justify-center items-center gap-8 bg-green1 w-56 h-12 text-white text-[20px] font-primary rounded-[5px]" 
                     onClick={() => setModalCadIsOpen(true)}>
@@ -341,7 +341,7 @@ function CadastraUsuarios() {
                         />
                     </div>
                 </div>  
-                <div className="w-[100%] bg-grey1 relative h-[80vh]">
+                <div className="md:w-[100%] xl:w-[100%] bg-grey1 relative h-[80vh]">
                     <table className="w-[100%] bg-grey1 border-green1 border-2 mt-4">
                         <thead className="bg-green1 text-white">
                         <tr>
@@ -357,17 +357,17 @@ function CadastraUsuarios() {
                         {Array.isArray(currentUsers) && currentUsers.length > 0 ? (
                         currentUsers.map((user, index) => (
                             <tr key={index + 1}>
-                                <td className="w-4 border-green1 border-2 p-2 font-primary text-white text-center">{currentIdStart + index}</td>
+                                <td className="w-4 border-green1 border-2 p-2 font-primary text-white text-center text-[20px] md:text-[15px] xl:text-[20px]">{currentIdStart + index}</td>
                             
-                                <td className="w-40 border-green1 border-2 p-2 font-primary text-white text-center">
+                                <td className="w-40 border-green1 border-2 p-2 font-primary text-white text-center text-[20px] md:text-[15px] xl:text-[20px]">
                                 <div className="flex flex-row justify-center items-center">
                                     {user.name} 
-                                    {user.admin && <img className="w-4 ml-2 absolute right-[30%] -m-4" src={adminicon} alt="Admin Icon" />}
+                                    {user.admin && <img className="w-4 m-1 xl:ml-2 absolute right-[30%] xl:-m-4" src={adminicon} alt="Admin Icon" />}
                                 </div>
                                 </td>
 
 
-                                <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center">{user.cpf.replace(/\D/g, '')
+                                <td className="w-32 border-green1 border-2 p-2 font-primary text-white text-center text-[20px] md:text-[10px] xl:text-[20px]">{user.cpf.replace(/\D/g, '')
                                 .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}
                                 </td>
                                 <td className="w-32 border-green1 border-2 p-2 text-center">

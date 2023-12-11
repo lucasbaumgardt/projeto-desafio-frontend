@@ -121,7 +121,7 @@ function CadastraProdutos() {
         try {
             console.log("ID do produto:", id);
             const response = await api.put("/produtos", {
-                id: id,
+                id: parseInt(id),
                 updatorCpf: creatorCpf,
                 update: {
                     name: name,
@@ -140,7 +140,7 @@ function CadastraProdutos() {
                 Swal.fire("Edição bem-sucedida", "", "success");
                 return true;
             } else {
-                console.log('erro')
+                console.log('erro', id)
                 return false;
             }
         } catch (error) {
@@ -168,7 +168,6 @@ function CadastraProdutos() {
         setProductToDelete(null);
         setModalCadIsOpen(false);
     };
-
 
     const closeDeleteModal = () => {
         setProductToDelete(null);

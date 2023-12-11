@@ -78,7 +78,7 @@ function MenuBar () {
     };
 
     return (
-        <div className="fixed top-0 left-0 bg-grey1 z-10 w-24 h-screen p-4 border-r-2 border-green2 outline-none">
+        <div className={`fixed top-0 left-0 bg-grey1 z-10 w-24 h-screen p-4 border-r-2 border-green2 outline-none md:block sm:hidden ${isMenuVisible ? 'hidden' : 'hidden'}`}>
             <div className='flex flex-col items-center'>
                 <img className="w-16 h-20 mt-2 cursor-pointer" src={folhaverde} onClick={navigateToInitialPage}></img>
                 <img className="w-12 mt-8 cursor-pointer" src={cart} onClick={() => setModalIsOpen(true)}></img>
