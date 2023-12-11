@@ -120,7 +120,8 @@ function CadastraProdutos() {
     const handleEditProduct = async () => {
         try {
             console.log("ID do produto:", id);
-            const response = await api.put(`/produtos/${id}`, {
+            const response = await api.put("/produtos", {
+                id: id,
                 updatorCpf: creatorCpf,
                 update: {
                     name: name,
